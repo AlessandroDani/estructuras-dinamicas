@@ -11,17 +11,17 @@ Nota:
 """
 class DoubleNode:
     # TODO: implementar nodo doble para tareas
-    prev = None
-    next = None
-    
-    def _init_(self,id,descripcion,prioridad):
+    def __init__(self,id,descripcion,prioridad):
         self.id = id
-        self.description = descripcion
+        self.descripcion = descripcion
         self.prioridad = prioridad
+        self.prev = None
+        self.next = None
 
 class DoublyLinkedList:
-    head = DoubleNode(1)
-    contador = 0
+    def __init__(self):
+        self.head = None
+        self.contador = 0
 
     # TODO: implementar DLL
     def append(self, task):
@@ -50,13 +50,21 @@ class DoublyLinkedList:
 
     def remove_by_id(self, task_id):
         """Elimina por id. O(n). Retorna True si elimina, False si no."""
-        nodo = head.next
-        while(head.id != nodo.id):
-
-        raise NotImplementedError
+        nodo = self.head.next
+        while(self.head.id != nodo.id):
+            if nodo.id == task_id:
+                nodo.prev.next = nodo.next
+                nodo.next.prev = nodo.prev
+                contador = contador - 1
+                return True
+            nodo = nodo.next
+        return False
+    
 
     def find_by_id(self, task_id):
         """Retorna la tarea o None. O(n)"""
+        nodo = self.head
+        
         raise NotImplementedError
 
     def find_by_prioridad(self, prioridad):
