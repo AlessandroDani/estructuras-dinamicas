@@ -10,6 +10,20 @@ class TestChallenge3LinkedList(unittest.TestCase):
         self.assertEqual(tarea["descripcion"], "Probar DLL")
         self.assertEqual(tarea["prioridad"], 2)
 
+    def test_remove_by_id(self):
+        
+
+    def test_find_by_priority(self):
+        tareas = find_by_priority(3)
+        self.assertLessEqual(tareas["prioridad"], 3)
+
+
+    def test_find_by_id_exist(self):
+        tarea = find_by_id(-3)
+        self.assertIsNone(tarea)
+
+
+
     # TODO: agrega más casos:
     # - eliminar por id (cuando implementes remove)
     # - find_by_priority devuelve múltiples tareas
