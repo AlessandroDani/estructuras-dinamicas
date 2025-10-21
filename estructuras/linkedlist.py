@@ -26,14 +26,17 @@ class DoublyLinkedList:
     # TODO: implementar DLL
     def append(self, task):
         """Inserta al final. O(1)"""
-        nodo = DoubleNode(task.id, task.descripcion, task.prioridad)
-        if contador == 0:
-            head = nodo
+        nodo = DoubleNode(task["id"], task["descripcion"], task["prioridad"])
+        if self.head is None:
+            self.head = nodo
+            self.head.next = self.head
+            self.head.prev = self.head
         else:
-            head.prev = nodo
-            nodo.next = head
+            nodo.prev = self.head.prev
+            self.head.prev.next = nodo
+            nodo.next = self.head
         
-        contador = contador + 1
+        self.contador = self.contador + 1
 
     def prepend(self, task):
         """Inserta al inicio. O(1)"""
@@ -64,16 +67,38 @@ class DoublyLinkedList:
     def find_by_id(self, task_id):
         """Retorna la tarea o None. O(n)"""
         nodo = self.head
-        
-        raise NotImplementedError
+        while True:
+            if nodo is None:
+                return None
+            if nodo.id != task_id:
+                nodo = nodo.next
+                if nodo == self.head:
+                    return None
+            else:
+                return {"id": nodo.id, "descripcion": nodo.descripcion, "prioridad": nodo.prioridad}
 
     def find_by_prioridad(self, prioridad):
         """Retorna lista de tareas con esa prioridad. O(n)"""
-        raise NotImplementedError
+        list = []
+        nodo = self.head
+        while True:
+            if nodo.prioridad == prioridad:
+                list.append(nodo)
+            nodo = nodo.next
+            if nodo == self.head:
+                return [{"id": n.id, "descripcion": n.descripcion, "prioridad": n.prioridad}for n in list]
 
     def iter_forward(self):
         """Generador hacia adelante."""
-        raise NotImplementedError
+        if self.head is None:
+            return
+        else:   
+            nodo = self.head
+            while True:
+                yield nodo
+                nodo = nodo.next
+                if nodo == self.head:
+                    break
 
     def iter_backward(self):
         """Generador hacia atrás."""

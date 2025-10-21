@@ -1,5 +1,5 @@
 import unittest
-from retos.reto3_linkedlist import add_task, find_by_id, find_by_priority
+from retos.reto3_linkedlist import add_task, find_by_id, find_by_priority, iter_forward
 
 class TestChallenge3LinkedList(unittest.TestCase):
     def test_add_and_find_by_id(self):
@@ -10,18 +10,30 @@ class TestChallenge3LinkedList(unittest.TestCase):
         self.assertEqual(tarea["descripcion"], "Probar DLL")
         self.assertEqual(tarea["prioridad"], 2)
 
-    def test_remove_by_id(self):
+    # def test_remove_by_id(self):
         
 
     def test_find_by_priority(self):
+        add_task(2, "Tarea baja", 5)
+        add_task(3, "Tarea media", 3)
+        add_task(4, "Tarea alta", 2)
+        add_task(5, "Otra tarea media", 3)
         tareas = find_by_priority(3)
-        self.assertLessEqual(tareas["prioridad"], 3)
+        for tarea in tareas:
+            self.assertEqual(tarea["prioridad"], 3)
 
 
     def test_find_by_id_exist(self):
         tarea = find_by_id(-3)
         self.assertIsNone(tarea)
 
+    # def test_iterator_forward(self):
+    #     add_task(1, "A", 2)
+    #     add_task(2, "B", 2)
+    #     add_task(3, "C", 2)
+    #     add_task(4, "D", 2)
+    #     for tarea in iter_forward():
+    #         print(tarea)
 
 
     # TODO: agrega más casos:
