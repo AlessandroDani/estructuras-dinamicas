@@ -21,73 +21,85 @@ class DoubleNode:
 class DoublyLinkedList:
     def __init__(self):
         self.head = None
+        self.tail = None
         self.contador = 0
 
     # TODO: implementar DLL
     def append(self, task):
         """Inserta al final. O(1)"""
         nodo = DoubleNode(task["id"], task["descripcion"], task["prioridad"])
-        if self.head is None:
-            self.head = nodo
-            self.head.next = self.head
-            self.head.prev = self.head
+        if self.tail is None:
+           self.head = nodo
+           self.tail = nodo
+           nodo.prev = None
+           nodo.next = None
         else:
-            nodo.prev = self.head.prev
-            self.head.prev.next = nodo
-            nodo.next = self.head
-        
+            self.tail.next = nodo
+            nodo.next = None
+            nodo.prev = self.tail
+            self.tail = nodo
         self.contador = self.contador + 1
 
     def prepend(self, task):
         """Inserta al inicio. O(1)"""
-        nodo = DoubleNode(task.id, task.descripcion, task.prioridad)
-        if contador == 0:
-            head = nodo
+        nodo = DoubleNode(task["id"], task["descripcion"], task["prioridad"])
+        if self.head is None:
+           self.head = nodo
+           self.tail = nodo
+           nodo.prev = None
+           nodo.next = None
         else:
-            temp = head
-            head = nodo
-            head.prev = temp.prev
-            head.next = temp
-
-        contador = contador + 1
+            nodo.next = self.head
+            nodo.prev = None
+            self.head.prev = nodo
+            self.head = nodo
+        self.contador = self.contador + 1
 
     def remove_by_id(self, task_id):
         """Elimina por id. O(n). Retorna True si elimina, False si no."""
-        nodo = self.head.next
-        while(self.head.id != nodo.id):
-            if nodo.id == task_id:
-                nodo.prev.next = nodo.next
-                nodo.next.prev = nodo.prev
-                contador = contador - 1
+        nodo = self.head
+        while nodo is not None:
+            if nodo.id != task_id:
+                nodo = nodo.next
+            else:
+                if nodo.prev is not None and nodo.next is not None:  
+                    nodo.prev.next = nodo.next
+                    nodo.next.prev = nodo.prev
+                else:
+                    if nodo.prev is None:
+                        self.head = nodo.next
+                        if self.head is not None:
+                            self.head.prev = None
+                    if nodo.next is None:
+                        self.tail = nodo.prev
+                        if self.tail is not None:
+                            self.tail.next = None
+                self.contador = self.contador - 1
                 return True
-            nodo = nodo.next
         return False
-    
 
     def find_by_id(self, task_id):
         """Retorna la tarea o None. O(n)"""
         nodo = self.head
-        while True:
-            if nodo is None:
-                return None
+        while nodo is not None:
             if nodo.id != task_id:
                 nodo = nodo.next
-                if nodo == self.head:
-                    return None
             else:
                 return {"id": nodo.id, "descripcion": nodo.descripcion, "prioridad": nodo.prioridad}
+        return None
 
     def find_by_prioridad(self, prioridad):
         """Retorna lista de tareas con esa prioridad. O(n)"""
         list = []
         nodo = self.head
-        while True:
+        while self.head != None:
+            if nodo == None:
+               return [{"id": n.id, "descripcion": n.descripcion, "prioridad": n.prioridad}for n in list]
             if nodo.prioridad == prioridad:
                 list.append(nodo)
             nodo = nodo.next
-            if nodo == self.head:
-                return [{"id": n.id, "descripcion": n.descripcion, "prioridad": n.prioridad}for n in list]
-
+        return None
+    
     def iter_forward(self):
         """Generador hacia adelante."""
         if self.head is None:
@@ -97,13 +109,20 @@ class DoublyLinkedList:
             while True:
                 yield nodo
                 nodo = nodo.next
-                if nodo == self.head:
+                if nodo == None:
                     break
 
     def iter_backward(self):
         """Generador hacia atrás."""
-        raise NotImplementedError
-
+        if self.tail is None:
+            return
+        else:   
+            nodo = self.tail
+            while True:
+                yield nodo
+                nodo = nodo.prev
+                if nodo == None:
+                    break
     def size(self):
         """Cantidad de nodos. O(1)"""
-        raise NotImplementedError
+        return self.contador

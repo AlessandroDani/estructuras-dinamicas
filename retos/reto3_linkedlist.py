@@ -31,5 +31,8 @@ def find_by_priority(prioridad: int):
     # TODO: delegar en DLL.find_by_prioridad (O(n))
     return _lista_tareas.find_by_prioridad(prioridad)
 
+def remove_by_id(task_id: int):
+    return _lista_tareas.remove_by_id(task_id)
+
 def iter_forward():
     return _lista_tareas.iter_forward()
