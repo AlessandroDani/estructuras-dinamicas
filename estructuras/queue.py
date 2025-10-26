@@ -22,6 +22,7 @@ class Queue:
         self.head = None
         self.tail = None
         self.count = 0
+        
     # TODO: implementar cola enlazada doble
     def enqueue(self, value):
         """Inserta al final. O(1)"""

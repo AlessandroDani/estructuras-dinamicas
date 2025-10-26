@@ -42,9 +42,11 @@ class Stack:
         return valor
 
     def peek(self):
+        """Retorna el tope sin extraer. O(1). IndexError si vacía."""
         return self.top.value
 
     def is_empty(self):
+        """True si la pila está vacía. O(1)"""
         return self.count == 0
 
     def size(self):
