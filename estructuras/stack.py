@@ -30,6 +30,7 @@ class Stack:
         else:
             nodo.next = self.top
             self.top = nodo
+        self.count = self.count + 1
 
     def pop(self):
         """Extrae y retorna el tope. O(1). Debe lanzar IndexError si está vacía."""
@@ -37,13 +38,14 @@ class Stack:
             raise IndexError("pop from empty stack")
         valor = self.top.value
         self.top = self.top.next
+        self.count = self.count - 1
         return valor
 
     def peek(self):
         return self.top.value
 
     def is_empty(self):
-        return self.top is None
+        return self.count == 0
 
     def size(self):
         """Cantidad de elementos. O(1)"""
