@@ -17,6 +17,9 @@ Este repo contiene una **mini-biblioteca de estructuras** (Stack, Queue, LinkedL
 python -m unittest -v
 ```
 
+## Ejecución de pruebas
+![Pruebas](image.png)
+
 ## Sugerencias
 
 * Sigue el patrón AAA (Arrange, Act, Assert) en las pruebas.
